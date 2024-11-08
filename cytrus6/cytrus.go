@@ -60,7 +60,7 @@ func Cytrus6Downloader(manifestFile string, game string, release string, platfor
 				}
 				extractBundleFile(bundle, downloadDestination, fragment.files)
 				os.Remove(bundleFilePath)
-				fmt.Println("Tous les fichiers ont été téléchargés et extrait dans le répertoireé", downloadDestination)
+				fmt.Println("Tous les fichiers ont été téléchargés et extrait dans le répertoire ", downloadDestination)
 			}
 		}()
 	}
