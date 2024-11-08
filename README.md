@@ -1,4 +1,4 @@
-# cytrus-downloader
+# Cytrus-downloader
 Un outil pour télécharger les jeux en provenance du cdn d'ankama
 Il est compatible avec cytrus 5 et 6
 
