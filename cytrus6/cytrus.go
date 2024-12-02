@@ -38,7 +38,7 @@ func Cytrus6Downloader(manifestFile string, game string, release string, platfor
 	manifestExtracted := extractManifestFromFileData(manifestData)
 
 	// telecharge les fichiers bundles
-	contentDestination := fmt.Sprintf("%s%s/%s/%s", outputDir, game, platform, strings.TrimPrefix(version, "6.0_"))
+	contentDestination := fmt.Sprintf("%s%s/%s/%s", outputDir, game, strings.TrimPrefix(version, "6.0_"), platform)
 
 	var wg sync.WaitGroup
 	for _, fragment := range manifestExtracted.fragments {
