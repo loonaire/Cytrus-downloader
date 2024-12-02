@@ -57,7 +57,7 @@ func Cytrus5Downloader(manifestFile string, game string, release string, platfor
 	jsonUnmarshal := map[string]Fragment{}
 	json.Unmarshal(jsonData, &jsonUnmarshal)
 
-	contentDestination := fmt.Sprintf("%s%s/%s", outputDir, game, strings.TrimPrefix(version, "5.0_"))
+	contentDestination := fmt.Sprintf("%s%s/%s/%s", outputDir, game, platform, strings.TrimPrefix(version, "5.0_"))
 	var wg sync.WaitGroup
 
 	for k, fragment := range jsonUnmarshal {
