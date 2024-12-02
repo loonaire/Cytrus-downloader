@@ -92,7 +92,8 @@ func main() {
 		}
 	}
 
-	fmt.Println("Informations sur les données à télécharger: nom du jeu", game, " plateforme:", platform, " release:", release, " version:", version)
+	fmt.Println("Informations sur les données à télécharger")
+	fmt.Println("Nom du jeu:", game, " plateforme:", platform, " release:", release, " version:", version)
 
 	if strings.HasPrefix(version, "6.0_") {
 		if err := cytrus6.Cytrus6Downloader(manifestFile, game, release, platform, version, outDownload); err != nil {
@@ -108,7 +109,7 @@ func main() {
 		}
 		fmt.Println("Le téléchargement s'est correctement terminé")
 	} else {
-		fmt.Println("La version indiquée est invalide")
+		fmt.Println("La version de cytrus indiquée est invalide")
 	}
 
 }
