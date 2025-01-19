@@ -67,7 +67,7 @@ func Cytrus5Downloader(manifestFile string, game string, release string, platfor
 			return errCreateDir
 		}
 		wg.Add(1)
-		go func() {
+		go func(downloadDestination string) {
 			defer wg.Done()
 
 			if errCreateDir := os.MkdirAll(downloadDestination, os.ModePerm); errCreateDir != nil {
@@ -101,6 +101,7 @@ func Cytrus5Downloader(manifestFile string, game string, release string, platfor
 					for _, hash := range pack.Hash {
 						if hash == file.Hash {
 							isFileInPackFile = true
+							break
 						}
 					}
 				}
@@ -110,20 +111,14 @@ func Cytrus5Downloader(manifestFile string, game string, release string, platfor
 						fmt.Println("Impossible de crée le dossier de destination, emplacement:" + downloadDestination + "\n[ERREUR]:" + errCreateDir.Error())
 						break
 					}
-					wg.Add(1)
-					go func() {
-						defer wg.Done()
-						downloadUrl := fmt.Sprintf("https://launcher.cdn.ankama.com/%s/hashes/%s/%s", game, file.Hash[0:2], file.Hash)
-						fmt.Println("Téléchargement du fichier", fileName, "URL:", downloadUrl)
-						if err := downloadFile(downloadUrl, fmt.Sprintf("%s%s", downloadDestination, fileName)); err != nil {
-							fmt.Println("Erreur lors du téléchargement du fichier" + fileName + "\n[ERREUR]: " + err.Error())
-						}
-					}()
-
+					downloadUrl := fmt.Sprintf("https://launcher.cdn.ankama.com/%s/hashes/%s/%s", game, file.Hash[0:2], file.Hash)
+					fmt.Println("Téléchargement du fichier", fileName, "URL:", downloadUrl)
+					if err := downloadFile(downloadUrl, fmt.Sprintf("%s%s", downloadDestination, fileName)); err != nil {
+						fmt.Println("Erreur lors du téléchargement du fichier" + fileName + "\n[ERREUR]: " + err.Error())
+					}
 				}
 			}
-
-		}()
+		}(downloadDestination)
 
 	}
 	wg.Wait()

@@ -43,7 +43,7 @@ func Cytrus6Downloader(manifestFile string, game string, release string, platfor
 	var wg sync.WaitGroup
 	for _, fragment := range manifestExtracted.fragments {
 		wg.Add(1)
-		go func() {
+		go func(fragment Fragment) {
 			defer wg.Done()
 			downloadDestination := fmt.Sprintf("%s/%s/", contentDestination, fragment.name)
 			os.MkdirAll(downloadDestination, os.ModePerm)
@@ -62,7 +62,7 @@ func Cytrus6Downloader(manifestFile string, game string, release string, platfor
 				os.Remove(bundleFilePath)
 				fmt.Println("Tous les fichiers ont été téléchargés et extrait dans le répertoire ", downloadDestination)
 			}
-		}()
+		}(fragment)
 	}
 	wg.Wait()
 	return nil
