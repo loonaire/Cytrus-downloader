@@ -36,14 +36,9 @@ type Meta struct {
 }
 
 type Platform struct {
-	Linux   VersionsAvalaible `json:"linux,omitempty"`
-	Windows VersionsAvalaible `json:"windows,omitempty"`
-	Darwin  VersionsAvalaible `json:"darwin,omitempty"`
-}
-
-type VersionsAvalaible struct {
-	Beta string `json:"beta"`
-	Main string `json:"main"`
+	Linux   map[string]string `json:"linux,omitempty"`
+	Windows map[string]string `json:"windows,omitempty"`
+	Darwin  map[string]string `json:"darwin,omitempty"`
 }
 
 func downloadLastCytrusJson() ([]byte, error) {
@@ -114,7 +109,7 @@ func getLastVersionOfGame(gameName string, platform string, release string) (str
 		return "", errorUnmarshal
 	}
 
-	releasesAvalaible := VersionsAvalaible{}
+	releasesAvalaible := make(map[string]string)
 	switch platform {
 	case "windows":
 		releasesAvalaible = lastcytrusUnmarshal.Games[gameName].Platforms.Windows
@@ -126,13 +121,8 @@ func getLastVersionOfGame(gameName string, platform string, release string) (str
 		return "", errors.New("Erreur, la plateforme n'existe pas")
 	}
 
-	version := ""
-	switch release {
-	case "beta":
-		version = releasesAvalaible.Beta
-	case "main":
-		version = releasesAvalaible.Main
-	default:
+	version, exists := releasesAvalaible[release]
+	if !exists {
 		return "", errors.New("Errur, la release n'existe pas")
 	}
 
