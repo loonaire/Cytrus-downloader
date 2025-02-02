@@ -123,7 +123,7 @@ func getLastVersionOfGame(gameName string, platform string, release string) (str
 
 	version, exists := releasesAvalaible[release]
 	if !exists {
-		return "", errors.New("Errur, la release n'existe pas")
+		return "", errors.New("Erreur, le nom de la release n'existe pas (généralement main ou beta)")
 	}
 
 	return version, nil
